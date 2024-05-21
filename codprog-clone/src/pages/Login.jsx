@@ -2,6 +2,22 @@ import { Form, redirect, useActionData } from "react-router-dom";
 import { LOGIN_URL, SUPABASE_API_KEY } from "../constant";
 import axios from "axios";
 
+export function loginLoader()
+{
+  console.log("loader is called");
+  if("user" in localStorage)
+    {
+        const user = JSON.parse(localStorage.getItem("user"));
+        console.log(user);
+        if("access_token" in user && "expires_at" in user && "refresh_token" in user && "user_id" in user)
+          {
+            console.log("You are logged in");
+            return redirect("/");
+          }
+    }
+  return null;
+}
+
 //!==> "handleAction" is a function react automatically calls when the form is submitted, depending upon the path given in action attribute of form component. Than react will go to the Route containig that path and invoke the function present inside action attribute of that route. The action function gives us an object by default, which will store our formdata.
 export async function handelAction({ request }) {
   // console.log("action called");
@@ -21,15 +37,18 @@ export async function handelAction({ request }) {
         "Content-Type": "application/json",
       },
     });
-    //  console.log(response);
-    const { access_token, expires_at, refresh_token } = response.data;
+     console.log(response);
+    const { access_token, expires_at, refresh_token , user:{id:user_id} } = response.data;
     // console.log(access_token);
     // console.log(expires_at);
     // console.log(refresh_token);
-    const user = {access_token , expires_at , refresh_token};
-    console.log(user);
+    const user_data = {access_token , expires_at , refresh_token , user_id};
+    console.log(user_data);
+    // sessionStorage.setItem("user" , JSON.stringify(user_data));
+    localStorage.setItem("user" , JSON.stringify(user_data));
     return redirect("/");
   } catch (error) {
+    localStorage.removeItem("user");
     // console.log(error.message); //!==> this error message is provided by the "axios" .
     // console.log(error.response.data.error_description);//!==> if credentials is wrong, than this error is given by supabase itself
     // console.log(error.response.data.error);//!==> If url is invalid

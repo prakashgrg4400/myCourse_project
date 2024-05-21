@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout";
 import { About, Home, Login, MyCourses, Signup } from "./pages/Index";
-import { handelAction } from "./pages/Login";
+import { handelAction, loginLoader } from "./pages/Login";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -15,7 +15,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/my-courses" element={<MyCourses />} />
-      <Route path="/login" element={<Login />} action={handelAction} />
+      <Route path="/login" element={<Login />} action={handelAction} loader={loginLoader} />
       <Route
         path="/signup"
         element={<Signup />}
