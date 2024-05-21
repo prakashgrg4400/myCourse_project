@@ -1,8 +1,10 @@
 import { Form } from "react-router-dom";
+import { LOGIN_URL, SUPABASE_API_KEY } from "../constant";
+import axios from "axios";
 
 //!==> "handleAction" is a function react automatically calls when the form is submitted, depending upon the path given in action attribute of form component. Than react will go to the Route containig that path and invoke the function present inside action attribute of that route. The action function gives us an object by default, which will store our formdata.
 export async function handelAction({ request }) {
-  console.log("action called");
+  // console.log("action called");
   // console.log(request.formData());
   const data = await request.formData(); //The formdata is stored inside "request.formData()" method which will return us promise, after resolving the promise we get the data. To access the data we need to use "get()" method, and inside get() method we need to inseert the "name" of the input which we gave in below jsx syntax, otherwise we wont be able to access the data.
   console.log(data);
@@ -10,7 +12,36 @@ export async function handelAction({ request }) {
     email: data.get("email"), //!==> Here "email" is the name of one of the input field.
     password: data.get("password"), //!==> Here "password" is the name of one of the input field.
   };
-  console.log(credentials);
+  // console.log(credentials);
+  try {
+    //!--> credentials is a javascript object, and by default axios converts this object into "string", so no need to us json.stringify() .
+    const response = await axios.post(LOGIN_URL, credentials, {
+      headers: {
+        apikey: SUPABASE_API_KEY,
+        "Content-Type": "application/json",
+      },
+    });
+    //  console.log(response);
+    const { access_token, expires_at, refresh_token } = response.data;
+    console.log(access_token);
+    console.log(expires_at);
+    console.log(refresh_token);
+  } catch (error) {
+    // console.log(error.message); //!==> this error message is provided by the "axios" .
+    // console.log(error.response.data.error_description);//!==> if credentials is wrong, than this error is given by supabase itself
+    // console.log(error.response.data.error);//!==> If url is invalid
+    if(error.response.request.status===401)
+      {
+        console.log(error.response.data.message);
+      }
+    else if(error.response.request.status===400)
+      {
+        console.log(error.response.data.error_description)
+      }
+      else{
+        console.log(error.message);
+      }
+  }
   return null; //! ==> returning is compulsory while using "action attribute" in our Route.
 }
 
