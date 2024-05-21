@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, redirect, useActionData } from "react-router-dom";
 import { LOGIN_URL, SUPABASE_API_KEY } from "../constant";
 import axios from "axios";
 
@@ -23,9 +23,12 @@ export async function handelAction({ request }) {
     });
     //  console.log(response);
     const { access_token, expires_at, refresh_token } = response.data;
-    console.log(access_token);
-    console.log(expires_at);
-    console.log(refresh_token);
+    // console.log(access_token);
+    // console.log(expires_at);
+    // console.log(refresh_token);
+    const user = {access_token , expires_at , refresh_token};
+    console.log(user);
+    return redirect("/");
   } catch (error) {
     // console.log(error.message); //!==> this error message is provided by the "axios" .
     // console.log(error.response.data.error_description);//!==> if credentials is wrong, than this error is given by supabase itself
@@ -33,19 +36,24 @@ export async function handelAction({ request }) {
     if(error.response.request.status===401)
       {
         console.log(error.response.data.message);
+        return {error:error.response.data.message};
       }
     else if(error.response.request.status===400)
       {
         console.log(error.response.data.error_description)
+        return {error:error.response.data.error_description};
       }
       else{
         console.log(error.message);
+        return {error:error.message};
       }
   }
-  return null; //! ==> returning is compulsory while using "action attribute" in our Route.
+  // return null; //! ==> returning is compulsory while using "action attribute" in our Route.  But since we have returned other data above so no need to return null;
 }
 
 function Login() {
+  const errorData = useActionData();
+  console.log(errorData);
   return (
     //  "Form" component is provided by the react-router-dom, and by default this Form uses get request. The get request sends data in the url, where as the post request doesnt sends data in the url, so data is hidden.
     <Form method="POST" action="/login">
@@ -69,6 +77,7 @@ function Login() {
         />
       </div>
       <input type="submit" value="Login" />
+      {errorData && errorData.error && <p>{errorData.error}</p>}
     </Form>
   );
 }
