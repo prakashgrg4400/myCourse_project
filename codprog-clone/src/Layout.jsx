@@ -11,6 +11,9 @@ function Layout() {
                     <NavLink to="/">Home</NavLink>
                 </li>
                 <li>
+                    <NavLink to="/profile" >Profile</NavLink>
+                </li>
+                <li>
                     <NavLink to="/about">About</NavLink>
                 </li>
                 <li>

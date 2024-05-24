@@ -6,15 +6,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout";
-import { About, Home, Login, MyCourses, Signup } from "./pages/Index";
+import { About, Home, Login, Profile, MyCourses, Signup } from "./pages/Index";
 import { handelAction, loginLoader } from "./pages/Login";
 import { myCoursesLoader } from "./pages/MyCourses";
+import { profileLoader } from "./pages/Profile";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />}>
       <Route index element={<Home />} />
       <Route path="/about" element={<About />} />
+      <Route path="/profile" element={<Profile />} loader={profileLoader} />
       <Route
         path="/my-courses"
         element={<MyCourses />}

@@ -87,7 +87,7 @@ function Login() {
   const location = useLocation(); // mycourse route is protected so it will redirect to login page with search parameter which can be accessed using useLocation hook as shown below .
 
   const loginURL = location.pathname + location.search;
-  console.log(loginURL);
+  // console.log(loginURL);
 
   // console.log(errorData);
   return (
