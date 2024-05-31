@@ -3,7 +3,7 @@ import { getUsers } from "./getUser";
 
 export function requireAuth({redirectTo})
 {
-    console.log(redirectTo);
+    // console.log(redirectTo);
      let users = getUsers();
      if(users===null)
         {

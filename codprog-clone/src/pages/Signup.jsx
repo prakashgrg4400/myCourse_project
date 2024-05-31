@@ -1,14 +1,18 @@
 import axios from "axios";
 import { SIGNUP_URL, SUPABASE_API_KEY } from "../constant";
-import { Form, useActionData } from "react-router-dom";
-import { requireAuth } from "../utilis/requireAuth";
+import { Form, redirect, useActionData } from "react-router-dom";
+import { getUsers } from "../utilis/getUser";
 
-export async function signupLoader(loaderObject)
+export async function signupLoader()
 {
-   console.log(loaderObject);
-   const redirectTo = new URL(loaderObject.pathname);
-   requireAuth(redirectTo);
-   return null;
+  const users = getUsers();
+  if(users===null)
+    {
+       return null ;
+    }
+  else{
+    return  redirect("/");
+  }
 }
 
 export async function signupAction({request}) {
@@ -17,6 +21,7 @@ export async function signupAction({request}) {
       email: user.get("email"),
       password:user.get("password"),
     }
+    console.log(newUser);
     const confirmPassword = user.get("confirm-password");
     if(newUser.password!==confirmPassword)
       {
@@ -30,13 +35,20 @@ export async function signupAction({request}) {
         }
       })
       const data = response.data ;
+      console.log(data);
       if(data.identities && data.identities.length===0)
         {
           return {error:"User already exists"};
         }
       return {message:"Confirm your email by opening your gmail account"};
+      // return redirect("/");
     } catch (error) {
-      return null;
+      console.log(error);
+       if(error?.response?.data?.msg)
+        {
+          return {error:error.response.data.msg};
+        }
+      return {error};
     }
 }
 
@@ -74,6 +86,7 @@ function Signup() {
                 <input type="submit" value="signup" />
             </div>
             {error && error?.errorMessage?<p>{error.errorMessage}</p>:""}
+            {error && error?.error?<p>{error.error}</p>:""}
         </Form>
     );
 }
