@@ -1,4 +1,4 @@
-import { Form, redirect, useActionData, useLocation } from "react-router-dom";
+import { Form, redirect, useActionData, useLocation, useNavigation } from "react-router-dom";
 import { LOGIN_URL, SUPABASE_API_KEY } from "../constant";
 import axios from "axios";
 import { getUsers } from "../utilis/getUser";
@@ -28,11 +28,11 @@ export function loginLoader() {
 //!==> "handleAction" is a function react automatically calls when the form is submitted, depending upon the path given in action attribute of form component. Than react will go to the Route containig that path and invoke the function present inside action attribute of that route. The action function gives us an object by default, which will store our formdata.
 export async function handelAction({ request }) {
   // console.log("action called");
-  console.log(request);
+  // console.log(request);
   const newURL = new URL(request.url);
-  console.log(newURL);
+  // console.log(newURL);
   const redirectedTO = newURL.searchParams.get("redirectTo") || "/";
-  console.log(redirectedTO);
+  // console.log(redirectedTO);
   const data = await request.formData(); //The formdata is stored inside "request.formData()" method which will return us promise, after resolving the promise we get the data. To access the data we need to use "get()" method, and inside get() method we need to inseert the "name" of the input which we gave in below jsx syntax, otherwise we wont be able to access the data.
   // console.log(data);
   const credentials = {
@@ -46,7 +46,7 @@ export async function handelAction({ request }) {
       headers: {
         apikey: SUPABASE_API_KEY,
         "Content-Type": "application/json",
-      },
+      },  
     });
     // console.log(response);
     const {
@@ -86,6 +86,11 @@ function Login() {
   const errorData = useActionData();
   const location = useLocation(); // mycourse route is protected so it will redirect to login page with search parameter which can be accessed using useLocation hook as shown below .
 
+  const navigation = useNavigation();
+  // console.log(navigation);
+  const isSubmitting = navigation.state==="submitting"?true:false;
+  console.log(isSubmitting);
+
   const loginURL = location.pathname + location.search;
   // console.log(loginURL);
 
@@ -112,7 +117,7 @@ function Login() {
           placeholder="password"
         />
       </div>
-      <input type="submit" value="Login" />
+      <input type="submit" value={isSubmitting?"submitting..":"Login"} disabled={isSubmitting} />
       {errorData && errorData.error && <p>{errorData.error}</p>}
     </Form>
   );

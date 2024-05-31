@@ -10,6 +10,7 @@ import { About, Home, Login, Profile, MyCourses, Signup } from "./pages/Index";
 import { handelAction, loginLoader } from "./pages/Login";
 import { myCoursesLoader } from "./pages/MyCourses";
 import { profileLoader } from "./pages/Profile";
+import { signupAction, signupLoader } from "./pages/Signup";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,8 @@ const router = createBrowserRouter(
       <Route
         path="/signup"
         element={<Signup />}
+        action={signupAction}
+        loader={signupLoader}
         // action={() => {
         //   console.log("inside sugnup");
         //   return null;
