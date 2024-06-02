@@ -5,16 +5,17 @@ import {
   createRoutesFromElements,
   RouterProvider,
 } from "react-router-dom";
-import Layout from "./Layout";
+import Layout, { layoutLoader } from "./Layout";
 import { About, Home, Login, Profile, MyCourses, Signup } from "./pages/Index";
 import { handelAction, loginLoader } from "./pages/Login";
 import { myCoursesLoader } from "./pages/MyCourses";
 import { profileLoader } from "./pages/Profile";
 import { signupAction, signupLoader } from "./pages/Signup";
+import { loguoutAction } from "./pages/Logout";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Layout />}>
+    <Route path="/" element={<Layout />} loader={layoutLoader} id="parentRouteLoader"> 
       <Route index element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/profile" element={<Profile />} loader={profileLoader} />
@@ -39,6 +40,7 @@ const router = createBrowserRouter(
         //   return null;
         // }}
       />
+      <Route path="/logout" action={loguoutAction} />
     </Route>
   )
 );
