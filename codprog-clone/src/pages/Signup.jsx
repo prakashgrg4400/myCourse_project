@@ -87,6 +87,7 @@ function Signup() {
             </div>
             {error && error?.errorMessage?<p>{error.errorMessage}</p>:""}
             {error && error?.error?<p>{error.error}</p>:""}
+            {error && error?.message?<p>{error.message}</p>:""}
         </Form>
     );
 }

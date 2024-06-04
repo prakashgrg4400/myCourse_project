@@ -89,7 +89,7 @@ function Login() {
   const navigation = useNavigation();
   // console.log(navigation);
   const isSubmitting = navigation.state==="submitting"?true:false;
-  console.log(isSubmitting);
+  // console.log(isSubmitting);
 
   const loginURL = location.pathname + location.search;
   // console.log(loginURL);

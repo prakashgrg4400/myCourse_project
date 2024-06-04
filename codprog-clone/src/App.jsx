@@ -12,11 +12,12 @@ import { myCoursesLoader } from "./pages/MyCourses";
 import { profileLoader } from "./pages/Profile";
 import { signupAction, signupLoader } from "./pages/Signup";
 import { loguoutAction } from "./pages/Logout";
+import { homeLoader } from "./pages/Home";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<Layout />} loader={layoutLoader} id="parentRouteLoader"> 
-      <Route index element={<Home />} />
+      <Route index element={<Home />} loader={homeLoader} />
       <Route path="/about" element={<About />} />
       <Route path="/profile" element={<Profile />} loader={profileLoader} />
       <Route
