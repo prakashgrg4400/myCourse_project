@@ -1,6 +1,6 @@
 import axios from "axios"
 import { ALL_COURSES, SUPABASE_API_KEY } from "../constant"
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 
 export async function homeLoader()
 {
@@ -14,7 +14,7 @@ export async function homeLoader()
 
 function Home() {
   const myCourses = useLoaderData();
-  console.log(myCourses);
+  // console.log(myCourses);
   return (
     <div>
       <h1>Home</h1>
@@ -26,7 +26,7 @@ function Home() {
                     Price : {course.amount} {course.currency}
                 </p>
                 <p>Description : {course.description}</p>
-                <button>View Course</button>
+                <Link to={`course-details/${course.id}`}>View Course</Link>
             </div>
         );
       })}

@@ -6,13 +6,14 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import Layout, { layoutLoader } from "./Layout";
-import { About, Home, Login, Profile, MyCourses, Signup } from "./pages/Index";
+import { About, Home, Login, Profile, MyCourses, Signup, CourseDetails } from "./pages/Index";
 import { handelAction, loginLoader } from "./pages/Login";
 import { myCoursesLoader } from "./pages/MyCourses";
 import { profileLoader } from "./pages/Profile";
 import { signupAction, signupLoader } from "./pages/Signup";
 import { loguoutAction } from "./pages/Logout";
 import { homeLoader } from "./pages/Home";
+import { courseDetailsLoader } from "./pages/CourseDetails";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
         // }}
       />
       <Route path="/logout" action={loguoutAction} />
+      <Route path="course-details/:id" element={<CourseDetails/>} loader={courseDetailsLoader} />
     </Route>
   )
 );
