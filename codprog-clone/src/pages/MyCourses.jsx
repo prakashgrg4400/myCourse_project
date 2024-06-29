@@ -2,7 +2,7 @@ import { redirect,} from "react-router-dom";
 import { getUsers } from "../utilis/getUser";
 
 export function myCoursesLoader({request}) {
-  // console.log(request);
+  console.log(request);
   const redirectTo = new URL(request.url).pathname;
   console.log(redirectTo)
   const user = getUsers();

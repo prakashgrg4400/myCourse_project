@@ -84,7 +84,7 @@ export async function handelAction({ request }) {
 
 function Login() {
   const errorData = useActionData();
-  const location = useLocation(); // mycourse route is protected so it will redirect to login page with search parameter which can be accessed using useLocation hook as shown below .
+  const location = useLocation(); // mycourse route is protected so it will redirect to login page with search parameter which can be accessed using useLocation hook as shown below .  
 
   const navigation = useNavigation();
   // console.log(navigation);
@@ -98,7 +98,7 @@ function Login() {
   return (
     //  "Form" component is provided by the react-router-dom, and by default this Form uses get request. The get request sends data in the url, where as the post request doesnt sends data in the url, so data is hidden.
     <Form method="POST" action={loginURL} replace>
-      {/* The action is triggered when we submit the form, in action we have give a path, so react will go to the "Route" and search for the path "login" , and inside that route react will automatically call the function present inside the "action" attribute */}
+      {/* The action is triggered when we submit the form, in action we have given a path, so react will go to the "Route" and search for the path "login" , and inside that route react will automatically call the function present inside the "action" attribute */}
       <div className="form-group">
         <input
           type="email"
