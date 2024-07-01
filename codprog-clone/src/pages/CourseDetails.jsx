@@ -1,6 +1,7 @@
 import axios from "axios";
 import { BASE_URL, SUPABASE_API_KEY } from "../constant";
 import { useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export async function courseDetailsLoader({params})
 {
@@ -17,7 +18,7 @@ function CourseDetails() {
     <div>
         {JSON.stringify(modules)}
         <br />
-        <button>Buy course</button>
+        <Link to={`/payment/${courseId}`}>Buy course</Link>
     </div>
   )
 }
