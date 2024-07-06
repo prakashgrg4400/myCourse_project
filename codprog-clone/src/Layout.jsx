@@ -50,7 +50,6 @@ function Layout() {
                             </li>
                         )}
                     </ul>
-                </nav>
                 {user && (
                     <Form method="POST" action="logout">
                         <button className={styles.logoutButton}>
@@ -63,6 +62,7 @@ function Layout() {
                         </button>
                     </Form>
                 )}
+                </nav>
             </header>
             <main>
                 <Outlet />
