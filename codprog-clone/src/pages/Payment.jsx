@@ -35,7 +35,7 @@ export async function paymentLoader({ request, params }) {
           },
         }
       );
-      console.log("pk")
+      // console.log("pk")
       return { clientSecret: data.clientSecret, error: null };
     } catch (error) {
         console.log(error);

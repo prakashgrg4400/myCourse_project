@@ -43,7 +43,7 @@ export async function handelAction({ request }) {
   try {
     //!--> credentials is a javascript object, and by default axios converts this object into "string", so no need to us json.stringify() .
     const response = await axios.post(LOGIN_URL, credentials, {
-      headers: {
+      headers: {  
         apikey: SUPABASE_API_KEY,
         "Content-Type": "application/json",
       },  
