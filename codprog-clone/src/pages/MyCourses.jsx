@@ -5,6 +5,9 @@ import { checkTokenExpired } from "../utilis/checkTokenExpired";
 import { refreshToken } from "../utilis/refreshToken";
 import { BASE_URL, SUPABASE_API_KEY } from "../constant";
 import axios from "axios";
+import styles from "./MyCourses.module.css";
+import thumbnail from "../assets/thumbnail.svg";
+
 
 export async function myCoursesLoader({ request }) {
     const redirectTo = new URL(request.url).pathname;
@@ -45,16 +48,44 @@ function MyCourses() {
     console.log(myCourses);
 
     return (
-        <div>
-            <h2>My Courses</h2>
-            {myCourses.map((myCourse) => {
-                return (
-                    <div key={myCourse.id}>
-                        <Link to={myCourse.id.toString()}>{myCourse.name}</Link>
-                    </div>
-                );
-            })}
-        </div>
+        // <div>
+        //     <h2>My Courses</h2>
+        //     {myCourses.map((myCourse) => {
+        //         return (
+        //             <div key={myCourse.id}>
+        //                 <Link to={myCourse.id.toString()}>{myCourse.name}</Link>
+        //             </div>
+        //         );
+        //     })}
+        // </div>
+        <div className={`${styles.myCoursesPage}`}>
+      <h1>My courses</h1>
+
+      <div className={styles.myCourses}>
+        {myCourses.map((course) => {
+          const { name, id } = course;
+
+          return (
+            <div key={id} className={styles.courseCard}>
+              <img
+                src={thumbnail}
+                alt="Course generic thumbnail"
+                className={styles.thumbnail}
+              />
+              <h2>{name}</h2>
+
+              <Link
+                key={course.id}
+                to={`${course.id}`}
+                className={styles.watchNowBtn}
+              >
+                Watch Now
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </div>
     );
 }
 

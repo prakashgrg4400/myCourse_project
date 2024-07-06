@@ -1,57 +1,73 @@
 import { NavLink, Outlet, Form, useRouteLoaderData } from "react-router-dom";
 import { getUsers } from "./utilis/getUser";
+import styles from "./RootLayout.module.css";
+import logoutSvg from "./assets/logout.svg";
 
 export function layoutLoader() {
     const user = getUsers();
-   return user ;
+    return user;
 }
 
 function Layout() {
     const user = useRouteLoaderData("parentRouteLoader");
     return (
-        <main>
-            <nav>
-                <h1>
-                    <NavLink>CodProg</NavLink>
-                </h1>
-                <ul>
-                    <li>
-                        <NavLink to="/">Home</NavLink>
-                    </li>
-                    {user && (
+        <>
+            <header>
+                <nav className={`${styles.nav} container`}>
+                    <h1 className={styles.logo}>
+                        <NavLink to="/">
+                            <span className={styles.cod}>Cod</span>
+                            <span className={styles.prog}>Prog</span>{" "}
+                        </NavLink>
+                    </h1>
+                    <ul className={styles.navItems}>
                         <li>
-                            <NavLink to="/profile">Profile</NavLink>
+                            <NavLink to="/">Home</NavLink>
                         </li>
-                    )}
-                    <li>
-                        <NavLink to="/about">About</NavLink>
-                    </li>
-                    {user && (
+                        {/* {user && (
+                            <li>
+                                <NavLink to="/profile">Profile</NavLink>
+                            </li>
+                        )} */}
                         <li>
-                            <NavLink to="/my-courses">My courses</NavLink>
+                            <NavLink to="/about">About</NavLink>
                         </li>
-                    )}
+                        {user && (
+                            <li>
+                                <NavLink to="/my-courses">My courses</NavLink>
+                            </li>
+                        )}
 
-                    {!user && (
-                        <li>
-                            <NavLink to="/signup">Signup</NavLink>
-                        </li>
-                    )}
+                        {!user && (
+                            <li>
+                                <NavLink to="/signup">Signup</NavLink>
+                            </li>
+                        )}
 
-                    {!user && (
-                        <li>
-                            <NavLink to="/login">Login</NavLink>
-                        </li>
-                    )}
-                </ul>
-            </nav>
-            {user && (
-                <Form method="POST" action="logout">
-                    <button>Logout</button>
-                </Form>
-            )}
-            <Outlet />
-        </main>
+                        {!user && (
+                            <li>
+                                <NavLink to="/login">Login</NavLink>
+                            </li>
+                        )}
+                    </ul>
+                </nav>
+                {user && (
+                    <Form method="POST" action="logout">
+                        <button className={styles.logoutButton}>
+                            Logout{" "}
+                            <img
+                                src={logoutSvg}
+                                alt="Logout SVG"
+                                className={styles.logoutSvg}
+                            />
+                        </button>
+                    </Form>
+                )}
+            </header>
+            <main>
+                <Outlet />
+            </main>
+        </>
     );
 }
 

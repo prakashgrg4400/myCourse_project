@@ -2,6 +2,7 @@ import axios from "axios";
 import { SIGNUP_URL, SUPABASE_API_KEY } from "../constant";
 import { Form, redirect, useActionData } from "react-router-dom";
 import { getUsers } from "../utilis/getUser";
+import styles from "./LoginAndSignup.module.css";
 
 export async function signupLoader()
 {
@@ -53,42 +54,72 @@ export async function signupAction({request}) {
 }
 
 function Signup() {
-  const error = useActionData();
+  const errorData = useActionData();
   
     return (
-        <Form action="/signup" method="POST">
-            <h2>Signup</h2>
-            <div>
-                <input
-                    type="email"
-                    name="email"
-                    id="email"
-                    placeholder="email"
-                />
-            </div>
-            <div>
-                <input
-                    type="password"
-                    name="password"
-                    id="password"
-                    placeholder="password"
-                />
-            </div>
-            <div>
-                <input
-                    type="password"
-                    name="confirm-password"
-                    id="confirm-password"
-                    placeholder="confirm-password"
-                />
-            </div>
-            <div>
-                <input type="submit" value="signup" />
-            </div>
-            {error && error?.errorMessage?<p>{error.errorMessage}</p>:""}
-            {error && error?.error?<p>{error.error}</p>:""}
-            {error && error?.message?<p>{error.message}</p>:""}
-        </Form>
+    //     <Form action="/signup" method="POST">
+    //         <h2>Signup</h2>
+    //         <div>
+    //             <input
+    //                 type="email"
+    //                 name="email"
+    //                 id="email"
+    //                 placeholder="email"
+    //             />
+    //         </div>
+    //         <div>
+    //             <input
+    //                 type="password"
+    //                 name="password"
+    //                 id="password"
+    //                 placeholder="password"
+    //             />
+    //         </div>
+    //         <div>
+    //             <input
+    //                 type="password"
+    //                 name="confirm-password"
+    //                 id="confirm-password"
+    //                 placeholder="confirm-password"
+    //             />
+    //         </div>
+    //         <div>
+    //             <input type="submit" value="signup" />
+    //         </div>
+    //         {error && error?.errorMessage?<p>{error.errorMessage}</p>:""}
+    //         {error && error?.error?<p>{error.error}</p>:""}
+    //         {error && error?.message?<p>{error.message}</p>:""}
+    //     </Form>
+
+    <div className="container">
+    <h2 className={styles.pageHeading}>
+      Create your account and start learning
+    </h2>
+    <Form action="/signup" method="POST" className={styles.form}>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input type="email" name="email" autoComplete="off" id="email" />
+      </div>
+      <div>
+        <label htmlFor="password">Password</label>
+        <input type="password" name="password" id="password" />
+      </div>
+      <div>
+        <label htmlFor="confirm password">Confirm Password</label>
+        <input
+          type="password"
+          name="confirm-password"
+          id="confirm-password"
+        />
+      </div>
+      <div>
+        <input type="submit" value="Signup" />
+        {errorData?.error && <p>{errorData.error}</p>}
+        {errorData?.message && <p>{errorData.message}</p>}
+      </div>
+    </Form>{" "}
+  </div>
+
     );
 }
 

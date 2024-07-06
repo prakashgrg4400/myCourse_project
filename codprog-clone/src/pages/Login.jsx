@@ -2,6 +2,8 @@ import { Form, redirect, useActionData, useLocation, useNavigation } from "react
 import { LOGIN_URL, SUPABASE_API_KEY } from "../constant";
 import axios from "axios";
 import { getUsers } from "../utilis/getUser";
+import styles from "./LoginAndSignup.module.css";
+
 
 export function loginLoader() {
   // console.log("loader is called");
@@ -96,30 +98,59 @@ function Login() {
 
   // console.log(errorData);
   return (
-    //  "Form" component is provided by the react-router-dom, and by default this Form uses get request. The get request sends data in the url, where as the post request doesnt sends data in the url, so data is hidden.
-    <Form method="POST" action={loginURL} replace>
-      {/* The action is triggered when we submit the form, in action we have given a path, so react will go to the "Route" and search for the path "login" , and inside that route react will automatically call the function present inside the "action" attribute */}
-      <div className="form-group">
-        <input
-          type="email"
-          name="email"
-          id="email"
-          autoComplete="off"
-          placeholder="email"
-        />
+    // //  "Form" component is provided by the react-router-dom, and by default this Form uses get request. The get request sends data in the url, where as the post request doesnt sends data in the url, so data is hidden.
+    // <Form method="POST" action={loginURL} replace>
+    //   {/* The action is triggered when we submit the form, in action we have given a path, so react will go to the "Route" and search for the path "login" , and inside that route react will automatically call the function present inside the "action" attribute */}
+    //   <div className="form-group">
+    //     <input
+    //       type="email"
+    //       name="email"
+    //       id="email"
+    //       autoComplete="off"
+    //       placeholder="email"
+    //     />
+    //   </div>
+    //   <div className="form-group">
+    //     <input
+    //       type="password"
+    //       name="password"
+    //       id="password"
+    //       autoComplete="off"
+    //       placeholder="password"
+    //     />
+    //   </div>
+    //   <input type="submit" value={isSubmitting?"submitting..":"Login"} disabled={isSubmitting} />
+    //   {errorData && errorData.error && <p>{errorData.error}</p>}
+    // </Form>
+
+    <div className={`container ${styles.formContainer}`}>
+    <h2 className={styles.pageHeading}>
+      Welcome Back! Login to continue learning
+    </h2>
+    <Form method="POST" action={loginURL} className={styles.form} replace>
+      <div>
+        <label htmlFor="email">Email</label>
+        <input type="email" name="email" id="email" autoComplete="off" />
       </div>
-      <div className="form-group">
+      <div>
+        <label htmlFor="password">Password</label>
         <input
           type="password"
           name="password"
           id="password"
           autoComplete="off"
-          placeholder="password"
         />
       </div>
-      <input type="submit" value={isSubmitting?"submitting..":"Login"} disabled={isSubmitting} />
+      <div>
+        <input
+          type="submit"
+          value={isSubmitting ? "submitting..." : "login"}
+          disabled={isSubmitting}
+        />
+      </div>
       {errorData && errorData.error && <p>{errorData.error}</p>}
     </Form>
+  </div>
   );
 }
 
